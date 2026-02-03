@@ -36,7 +36,7 @@ const Warehouse: React.FC<WarehouseProps> = ({ t, lang, initialTab = 'dashboard'
         <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm ring-1 ring-slate-50">
           <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">{t.inventoryTurnover}</p>
           <h3 className="text-3xl font-black text-slate-800 mt-1">12.5x</h3>
-          <p className="text-[10px] text-green-500 font-bold mt-2">↑ 0.8x from target</p>
+          <p className="text-[10px] text-green-500 font-bold mt-2">↑ 0.8x {t.fromTarget}</p>
         </div>
         <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm ring-1 ring-slate-50">
           <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">{t.emptyShelfRate}</p>
@@ -64,7 +64,7 @@ const Warehouse: React.FC<WarehouseProps> = ({ t, lang, initialTab = 'dashboard'
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Overtime Chart */}
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-          <h3 className="font-bold text-slate-800 mb-6">{t.overtime} Breakdown (Weekly)</h3>
+          <h3 className="font-bold text-slate-800 mb-6">{t.overtimeBreakdownWeekly}</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={overtimeData}>
@@ -80,20 +80,20 @@ const Warehouse: React.FC<WarehouseProps> = ({ t, lang, initialTab = 'dashboard'
 
         {/* General Overview Table */}
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-          <h3 className="font-bold text-slate-800 mb-6">Stock Level by Category</h3>
+          <h3 className="font-bold text-slate-800 mb-6">{t.stockLevelByCategory}</h3>
           <div className="space-y-4">
              {[
-               { cat: 'Finished Goods', qty: 6800, color: 'bg-green-500', trend: '+4%' },
-               { cat: 'Raw Materials', qty: 4200, color: 'bg-blue-500', trend: '-2%' },
-               { cat: 'WIP', qty: 1100, color: 'bg-amber-500', trend: '+1%' },
-               { cat: 'Packaging', qty: 420, color: 'bg-indigo-500', trend: 'Stable' },
+               { cat: t.finishedGoods, qty: 6800, color: 'bg-green-500', trend: '+4%' },
+               { cat: t.rawMaterials, qty: 4200, color: 'bg-blue-500', trend: '-2%' },
+               { cat: t.wip, qty: 1100, color: 'bg-amber-500', trend: '+1%' },
+               { cat: t.packaging, qty: 420, color: 'bg-indigo-500', trend: t.stable },
              ].map((row, i) => (
                <div key={i} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
                   <div className="flex items-center space-x-3">
                      <div className={`w-2 h-8 rounded-full ${row.color}`}></div>
                      <div>
                         <p className="text-xs font-bold text-slate-800 uppercase tracking-tight">{row.cat}</p>
-                        <p className="text-[10px] text-slate-400 font-medium">{row.trend} Weekly</p>
+                        <p className="text-[10px] text-slate-400 font-medium">{row.trend} {t.weekly}</p>
                      </div>
                   </div>
                   <p className="text-lg font-black text-slate-700">{row.qty.toLocaleString()}</p>
@@ -112,7 +112,7 @@ const Warehouse: React.FC<WarehouseProps> = ({ t, lang, initialTab = 'dashboard'
         <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/20">
           <div>
             <h3 className="text-lg font-bold text-slate-800">{t.inefficiencyCosts} (Cost of Poor Quality)</h3>
-            <p className="text-xs text-slate-500 mt-1">Detailed audit of unnecessary warehouse activities and resource drain.</p>
+            <p className="text-xs text-slate-500 mt-1">{t.detailedAuditWarehouse}</p>
           </div>
           <div className="text-right">
              <p className="text-[10px] font-bold text-slate-400 uppercase">Est. Monthly Leakage</p>
@@ -159,9 +159,9 @@ const Warehouse: React.FC<WarehouseProps> = ({ t, lang, initialTab = 'dashboard'
           </table>
         </div>
         <div className="p-4 bg-slate-900 text-slate-400 text-[10px] font-medium flex justify-between">
-          <span>* Unnecessary Movements: Calculated as (Forklift Rental + Energy + Labor) per unnecessary mile</span>
-          <span>* Picking Cancellations: Calculated as labor hours wasted + restocking opportunity cost</span>
-          <span>* Product Wait Time: Financial impact of stalled inventory capital</span>
+          <span>* {t.unnecessaryMovementsCalc}</span>
+          <span>* {t.pickingCancellationsCalc}</span>
+          <span>* {t.productWaitTimeCalc}</span>
         </div>
       </div>
       <AIInsights section="Inefficiency & Cost Leakage Audit" data={inefficiencyData} lang={lang} t={t} />

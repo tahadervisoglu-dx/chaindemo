@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Translations, Language } from '../types';
 import AIInsights from './AIInsights';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
@@ -14,11 +14,11 @@ const reservationData = [
   { rep: 'John Doe', customer: 'City Infra', product: 'Steel Support B', qty: 5000, waitDays: 8, unitProfit: 5, holdingCostPerDay: 0.1, capitalCostRate: 0.001 },
 ];
 
-// Mock Transportation Data
-const transportUtilizationData = [
-  { type: 'Import', loadFactor: 88, count: 12 },
-  { type: 'Export', loadFactor: 95, count: 8 },
-  { type: 'Local', loadFactor: 72, count: 24 },
+// Mock Transportation Data - will be made dynamic
+const staticTransportData = [
+  { loadFactor: 88, count: 12 },
+  { loadFactor: 95, count: 8 },
+  { loadFactor: 72, count: 24 },
 ];
 
 const shipmentPlanData = [
@@ -37,6 +37,13 @@ interface LogisticsProps {
 
 const Logistics: React.FC<LogisticsProps> = ({ t, lang, initialTab = 'reservation' }) => {
   
+  // Dynamic transportation data with translations
+  const transportUtilizationData = useMemo(() => [
+    { type: t.import, loadFactor: 88, count: 12 },
+    { type: t.export, loadFactor: 95, count: 8 },
+    { type: t.local, loadFactor: 72, count: 24 },
+  ], [t.import, t.export, t.local]);
+  
   const renderReservationPerformance = () => {
     const threshold = 15;
     return (
@@ -45,7 +52,7 @@ const Logistics: React.FC<LogisticsProps> = ({ t, lang, initialTab = 'reservatio
           <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/30">
             <div>
               <h3 className="text-lg font-bold text-slate-800">{t.reservationPerformance}</h3>
-              <p className="text-xs text-slate-500 mt-1">Tracking capital and opportunity costs of inventory reservations.</p>
+              <p className="text-xs text-slate-500 mt-1">{t.trackingCapitalCosts}</p>
             </div>
             <div className="flex space-x-2">
               <span className="px-3 py-1 bg-red-100 text-red-700 text-[10px] font-bold rounded-full uppercase tracking-wider flex items-center">
@@ -129,9 +136,9 @@ const Logistics: React.FC<LogisticsProps> = ({ t, lang, initialTab = 'reservatio
       {/* Shipment Types Summary KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
-          { label: t.importShipments, count: 12, trend: '8 Active Vessel', iconColor: 'text-blue-600', bgColor: 'bg-blue-50' },
-          { label: t.exportShipments, count: 8, trend: '3 Scheduled Today', iconColor: 'text-green-600', bgColor: 'bg-green-50' },
-          { label: t.localShipments, count: 24, trend: 'Daily City Loop', iconColor: 'text-amber-600', bgColor: 'bg-amber-50' },
+          { label: t.importShipments, count: 12, trend: `8 ${t.activeVessel}`, iconColor: 'text-blue-600', bgColor: 'bg-blue-50' },
+          { label: t.exportShipments, count: 8, trend: `3 ${t.scheduledToday}`, iconColor: 'text-green-600', bgColor: 'bg-green-50' },
+          { label: t.localShipments, count: 24, trend: t.dailyCityLoop, iconColor: 'text-amber-600', bgColor: 'bg-amber-50' },
         ].map((item, idx) => (
           <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center space-x-5">
             <div className={`w-12 h-12 ${item.bgColor} ${item.iconColor} rounded-xl flex items-center justify-center`}>
@@ -139,7 +146,7 @@ const Logistics: React.FC<LogisticsProps> = ({ t, lang, initialTab = 'reservatio
             </div>
             <div>
               <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">{item.label}</p>
-              <h3 className="text-2xl font-black text-slate-800">{item.count} <span className="text-sm font-medium text-slate-400">Loads</span></h3>
+              <h3 className="text-2xl font-black text-slate-800">{item.count} <span className="text-sm font-medium text-slate-400">{t.loads}</span></h3>
               <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">{item.trend}</p>
             </div>
           </div>
@@ -166,7 +173,7 @@ const Logistics: React.FC<LogisticsProps> = ({ t, lang, initialTab = 'reservatio
             </ResponsiveContainer>
           </div>
           <div className="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
-            <span className="text-xs text-slate-500 font-bold">Avg. Fleet Load Efficiency</span>
+            <span className="text-xs text-slate-500 font-bold">{t.avgFleetLoadEfficiency}</span>
             <span className="text-lg font-black text-blue-600">85.3%</span>
           </div>
         </div>
@@ -179,14 +186,14 @@ const Logistics: React.FC<LogisticsProps> = ({ t, lang, initialTab = 'reservatio
       <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-slate-100 bg-slate-50/20">
           <h3 className="text-lg font-bold text-slate-800">{t.shipmentPlan}</h3>
-          <p className="text-xs text-slate-500 mt-1">Daily operational schedule for incoming and outgoing loads.</p>
+          <p className="text-xs text-slate-500 mt-1">{t.dailyOperationalSchedule}</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-100 text-[10px] text-slate-500 uppercase font-black tracking-widest">
-                <th className="px-6 py-4">ID / Type</th>
-                <th className="px-6 py-4">Route (Origin &rarr; Destination)</th>
+                <th className="px-6 py-4">{t.idType}</th>
+                <th className="px-6 py-4">{t.routeOriginDestination}</th>
                 <th className="px-6 py-4">{t.vesselVehicle}</th>
                 <th className="px-6 py-4 text-center">{t.loadFactor}</th>
                 <th className="px-6 py-4 text-right">{t.eta}</th>

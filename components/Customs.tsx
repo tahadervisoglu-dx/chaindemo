@@ -138,17 +138,17 @@ const Customs: React.FC<CustomsProps> = ({ t, lang, initialTab = 'dashboard' }) 
              <h3 className="text-3xl font-black text-slate-800">14.2h</h3>
              <span className="text-[10px] text-green-500 font-bold mb-1">↓ 15%</span>
           </div>
-          <p className="text-[10px] text-slate-400 font-bold mt-2 uppercase">Liman Bazlı Ortalama</p>
+          <p className="text-[10px] text-slate-400 font-bold mt-2 uppercase">{t.portBasedAverageShort}</p>
         </div>
         <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition-all hover:shadow-md">
           <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">{t.dutiesPaid} (YTD)</p>
           <h3 className="text-3xl font-black text-slate-800 mt-1">$128,400</h3>
-          <p className="text-[10px] text-blue-500 font-bold mt-2 uppercase tracking-tighter">Geri Kazanım: 12.5%</p>
+          <p className="text-[10px] text-blue-500 font-bold mt-2 uppercase tracking-tighter">{t.recoveryRate}: 12.5%</p>
         </div>
         <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition-all hover:shadow-md">
           <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">{t.clearedItems}</p>
           <h3 className="text-3xl font-black text-blue-600 mt-1">1,245</h3>
-          <p className="text-[10px] text-slate-400 font-bold mt-2 uppercase tracking-tighter">İşlem Gören Beyanname</p>
+          <p className="text-[10px] text-slate-400 font-bold mt-2 uppercase tracking-tighter">{t.processedDeclarationsShort}</p>
         </div>
       </div>
 
@@ -157,7 +157,7 @@ const Customs: React.FC<CustomsProps> = ({ t, lang, initialTab = 'dashboard' }) 
         <div className="flex items-center justify-between px-2">
            <div>
              <h3 className="font-black text-slate-800 text-xl uppercase tracking-tight">{t.customsMap}</h3>
-             <p className="text-xs text-slate-500 font-medium tracking-wide">Real-time global trade lane monitoring and customs status tracking.</p>
+             <p className="text-xs text-slate-500 font-medium tracking-wide">{t.realTimeTradeMonitoring}</p>
            </div>
            <div className="flex space-x-2">
               <button className="px-5 py-2.5 bg-slate-900 text-white text-[10px] font-black rounded-xl uppercase tracking-widest hover:bg-slate-800 transition-all shadow-xl active:scale-95">

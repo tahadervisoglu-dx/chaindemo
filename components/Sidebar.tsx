@@ -121,8 +121,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, t }) => {
 
       <div className="p-4 border-t border-slate-800">
         <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
-          <p className="text-xs text-slate-500 font-medium mb-1">SYSTEM STATUS</p>
-          <p className="text-[10px] text-green-400 font-bold uppercase tracking-widest">AI CORE: OPTIMIZED</p>
+          <p className="text-xs text-slate-500 font-medium mb-1">{t.systemStatus}</p>
+          <p className="text-[10px] text-green-400 font-bold uppercase tracking-widest">{t.aiCoreOptimized}</p>
         </div>
       </div>
     </aside>

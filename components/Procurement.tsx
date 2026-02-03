@@ -34,7 +34,7 @@ const Procurement: React.FC<ProcurementProps> = ({ t, lang, initialTab = 'orders
   // escalationData provides mock data for cost breakdown and macro-economic impact analysis.
   const escalationData = useMemo(() => [
     {
-      item: t.coldRolledSteel,
+      item: 'Cold Rolled Steel',
       current: { raw: 8.5, labor: 2.0, energy: 1.0, other: 0.5 },
       new: { raw: 10.2, labor: 2.2, energy: 1.4, other: 0.5 },
       fxChange: 12.5,
@@ -61,11 +61,11 @@ const Procurement: React.FC<ProcurementProps> = ({ t, lang, initialTab = 'orders
 
   // supplierPerformanceData provides mock data for vendor assessment and risk management.
   const supplierPerformanceData = useMemo(() => [
-    { name: 'Anatolia Steel Co.', otd: 94, quality: 98, priceIdx: 1.05, risk: 'Low', volume: '$450k' },
-    { name: 'Bharat Motors Ltd', otd: 88, quality: 92, priceIdx: 0.98, risk: 'Medium', volume: '$320k' },
-    { name: 'Global Pack India', otd: 99, quality: 99, priceIdx: 1.02, risk: 'Low', volume: '$120k' },
-    { name: 'Euro Seals TR', otd: 65, quality: 85, priceIdx: 1.12, risk: 'High', volume: '$45k' },
-  ], []);
+    { name: 'Anatolia Steel Co.', otd: 94, quality: 98, priceIdx: 1.05, risk: t.low, volume: '$450k' },
+    { name: 'Bharat Motors Ltd', otd: 88, quality: 92, priceIdx: 0.98, risk: t.medium, volume: '$320k' },
+    { name: 'Global Pack India', otd: 99, quality: 99, priceIdx: 1.02, risk: t.low, volume: '$120k' },
+    { name: 'Euro Seals TR', otd: 65, quality: 85, priceIdx: 1.12, risk: t.high, volume: '$45k' },
+  ], [t.low, t.medium, t.high]);
 
   // bomErrorData provides mock data for Bill of Materials conflicts and MRP synchronization.
   const bomErrorData = useMemo(() => [
@@ -93,14 +93,14 @@ const Procurement: React.FC<ProcurementProps> = ({ t, lang, initialTab = 'orders
   ];
 
   const openOrdersData = [
-    { poNo: 'PO-8801', origin: 'Turkey', category: t.rawMaterial, item: 'Cold Rolled Steel', itemCode: 'RM-STEEL-01', actualQty: 1000, budgetQty: 1000, actualPrice: 12.5, budgetPrice: 11.0, deliveryDate: '2025-05-15', status: 'Delayed', pallets: 12 },
-    { poNo: 'PO-4420', origin: 'India', category: 'Components', item: 'Electric Motor V2', itemCode: 'COMP-MOT-V2', actualQty: 5000, budgetQty: 4800, actualPrice: 2.1, budgetPrice: 2.1, deliveryDate: '2025-05-28', status: 'On Track', pallets: 4 },
-    { poNo: 'PO-8805', origin: 'Turkey', category: 'Packaging', item: 'Euro Pallets', itemCode: 'PACK-PAL-09', actualQty: 10000, budgetQty: 10000, actualPrice: 0.45, budgetPrice: 0.50, deliveryDate: '2025-05-25', status: 'On Track', pallets: 22 },
-    { poNo: 'PO-4432', origin: 'India', category: 'Components', item: 'Control Board X', itemCode: 'COMP-BRD-X8', actualQty: 200, budgetQty: 200, actualPrice: 48.0, budgetPrice: 42.0, deliveryDate: '2025-05-10', status: 'Delayed', pallets: 1 },
-    { poNo: 'PO-8812', origin: 'Turkey', category: t.rawMaterial, item: 'Alu Ingot', itemCode: 'RM-ALU-04', actualQty: 2500, budgetQty: 2000, actualPrice: 3.2, budgetPrice: 3.0, deliveryDate: '2025-06-02', status: 'On Track', pallets: 18 },
-    { poNo: 'PO-4450', origin: 'India', category: 'Raw Material', item: 'Copper Wire', itemCode: 'RM-COP-99', actualQty: 800, budgetQty: 800, actualPrice: 9.1, budgetPrice: 8.5, deliveryDate: '2025-05-30', status: 'On Track', pallets: 3 },
-    { poNo: 'PO-8815', origin: 'Turkey', category: 'Components', item: 'Hydraulic Seal', itemCode: 'COMP-HYD-S2', actualQty: 300, budgetQty: 300, actualPrice: 15.5, budgetPrice: 14.0, deliveryDate: '2025-05-22', status: 'On Track', pallets: 2 },
-    { poNo: 'PO-8819', origin: 'Turkey', category: t.rawMaterial, item: 'Polyamide Granules', itemCode: 'RM-POLY-G1', actualQty: 5000, budgetQty: 4500, actualPrice: 4.8, budgetPrice: 4.5, deliveryDate: '2025-05-29', status: 'On Track', pallets: 10 },
+    { poNo: 'PO-8801', origin: 'Turkey', category: t.rawMaterial, item: 'Cold Rolled Steel', itemCode: 'RM-STEEL-01', actualQty: 1000, budgetQty: 1000, actualPrice: 12.5, budgetPrice: 11.0, deliveryDate: '2025-05-15', status: t.delayed, pallets: 12 },
+    { poNo: 'PO-4420', origin: 'India', category: t.components, item: 'Electric Motor V2', itemCode: 'COMP-MOT-V2', actualQty: 5000, budgetQty: 4800, actualPrice: 2.1, budgetPrice: 2.1, deliveryDate: '2025-05-28', status: t.onTrack, pallets: 4 },
+    { poNo: 'PO-8805', origin: 'Turkey', category: t.packaging, item: 'Euro Pallets', itemCode: 'PACK-PAL-09', actualQty: 10000, budgetQty: 10000, actualPrice: 0.45, budgetPrice: 0.50, deliveryDate: '2025-05-25', status: t.onTrack, pallets: 22 },
+    { poNo: 'PO-4432', origin: 'India', category: t.components, item: 'Control Board X', itemCode: 'COMP-BRD-X8', actualQty: 200, budgetQty: 200, actualPrice: 48.0, budgetPrice: 42.0, deliveryDate: '2025-05-10', status: t.delayed, pallets: 1 },
+    { poNo: 'PO-8812', origin: 'Turkey', category: t.rawMaterial, item: 'Alu Ingot', itemCode: 'RM-ALU-04', actualQty: 2500, budgetQty: 2000, actualPrice: 3.2, budgetPrice: 3.0, deliveryDate: '2025-06-02', status: t.onTrack, pallets: 18 },
+    { poNo: 'PO-4450', origin: 'India', category: t.rawMaterial, item: 'Copper Wire', itemCode: 'RM-COP-99', actualQty: 800, budgetQty: 800, actualPrice: 9.1, budgetPrice: 8.5, deliveryDate: '2025-05-30', status: t.onTrack, pallets: 3 },
+    { poNo: 'PO-8815', origin: 'Turkey', category: t.components, item: 'Hydraulic Seal', itemCode: 'COMP-HYD-S2', actualQty: 300, budgetQty: 300, actualPrice: 15.5, budgetPrice: 14.0, deliveryDate: '2025-05-22', status: t.onTrack, pallets: 2 },
+    { poNo: 'PO-8819', origin: 'Turkey', category: t.rawMaterial, item: 'Polyamide Granules', itemCode: 'RM-POLY-G1', actualQty: 5000, budgetQty: 4500, actualPrice: 4.8, budgetPrice: 4.5, deliveryDate: '2025-05-29', status: t.onTrack, pallets: 10 },
   ];
 
   const filteredOrders = useMemo(() => {
@@ -136,7 +136,7 @@ const Procurement: React.FC<ProcurementProps> = ({ t, lang, initialTab = 'orders
         <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
           <div className="flex-1">
             <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">{t.orderAnalysis}</h3>
-            <p className="text-sm text-slate-500 mt-1">Stratejik sipariş verimliliği ve bölge bazlı tedarik risk analizi.</p>
+            <p className="text-sm text-slate-500 mt-1">{t.strategicOrderEfficiency}</p>
           </div>
           <div className="flex flex-wrap gap-4">
             <button onClick={() => handlePerformAnalysis('TR')} className="px-6 py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-xs flex items-center space-x-3 hover:bg-slate-800 active:scale-95 transition-all shadow-xl">
@@ -179,7 +179,7 @@ const Procurement: React.FC<ProcurementProps> = ({ t, lang, initialTab = 'orders
                     <th className="px-8 py-4">PO NO</th>
                     <th className="px-8 py-4">ITEM NAME</th>
                     <th className="px-8 py-4">CATEGORY (DRILL-DOWN)</th>
-                    <th className="px-8 py-4 text-center">QTY (ACTUAL/BUDGET)</th>
+                    <th className="px-8 py-4 text-center">{t.quantity} ({t.actualBudget})</th>
                     <th className="px-8 py-4 text-center">STATUS</th>
                   </tr>
                 </thead>
@@ -284,22 +284,27 @@ const Procurement: React.FC<ProcurementProps> = ({ t, lang, initialTab = 'orders
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                       <XAxis dataKey="name" axisLine={false} tickLine={false} />
                       <YAxis axisLine={false} tickLine={false} />
-                      <Tooltip />
-                      <Legend iconType="circle" />
-                      <Bar dataKey="Budget" fill="#e2e8f0" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="Actual" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                      <Tooltip 
+                        formatter={(value, name) => [value, name === 'Budget' ? t.budget : name === 'Actual' ? t.actual : name]}
+                      />
+                      <Legend 
+                        iconType="circle" 
+                        formatter={(value) => value === 'Budget' ? t.budget : value === 'Actual' ? t.actual : value}
+                      />
+                      <Bar dataKey="Budget" fill="#e2e8f0" radius={[4, 4, 0, 0]} name={t.budget} />
+                      <Bar dataKey="Actual" fill="#3b82f6" radius={[4, 4, 0, 0]} name={t.actual} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               </div>
               <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm overflow-y-auto max-h-[400px]">
-                <h3 className="font-bold text-slate-800 mb-4">Price Variance Analysis</h3>
+                <h3 className="font-bold text-slate-800 mb-4">{t.priceVarianceAnalysis}</h3>
                 {priceAnalysisData.map((d, i) => (
                   <div key={i} className="p-4 bg-slate-50 rounded-xl mb-4 border border-slate-100 flex justify-between items-center">
                     <div className="font-bold text-sm text-slate-700">{d.category}</div>
                     <div className="text-right">
                        <div className={`text-sm font-black ${d.actualTotal > d.budgetTotal ? 'text-red-600' : 'text-green-600'}`}>${d.actualTotal.toLocaleString()}</div>
-                       <div className="text-[10px] text-slate-400 font-bold uppercase">Budget: ${d.budgetTotal.toLocaleString()}</div>
+                       <div className="text-[10px] text-slate-400 font-bold uppercase">{t.budget}: ${d.budgetTotal.toLocaleString()}</div>
                     </div>
                   </div>
                 ))}
@@ -315,21 +320,21 @@ const Procurement: React.FC<ProcurementProps> = ({ t, lang, initialTab = 'orders
             <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl overflow-hidden">
               <div className="mb-8">
                   <h3 className="font-black text-slate-800 text-2xl uppercase tracking-tight">{t.escalationAnalysis}</h3>
-                  <p className="text-slate-500 text-sm mt-1">Hammadde (LME), işçilik ve enerji maliyet kırılımı.</p>
+                  <p className="text-slate-500 text-sm mt-1">{t.rawMaterialBreakdown}</p>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-left min-w-[1200px] border-collapse">
                   <thead>
                     <tr className="bg-slate-50 border-b border-slate-200 text-[10px] text-slate-400 uppercase font-black tracking-widest">
-                      <th className="p-4 sticky left-0 bg-slate-50 z-20 shadow-r">STOCK ITEM</th>
-                      <th className="p-4 text-center">CURRENT ($)</th>
-                      <th className="p-4 text-center bg-amber-50 text-amber-600">FX Δ (%)</th>
-                      <th className="p-4 text-center bg-amber-50 text-amber-600">INF Δ (%)</th>
-                      <th className="p-4 text-center">RAW Δ</th>
-                      <th className="p-4 text-center">ENERGY Δ</th>
-                      <th className="p-4 text-center">LABOR Δ</th>
-                      <th className="p-4 text-center bg-indigo-50 text-indigo-700">NEW ($)</th>
-                      <th className="p-4 text-right bg-red-50 text-red-600">BUDGET IMPACT</th>
+                      <th className="p-4 sticky left-0 bg-slate-50 z-20 shadow-r">{t.stockItem}</th>
+                      <th className="p-4 text-center">{t.currentPrice}</th>
+                      <th className="p-4 text-center bg-amber-50 text-amber-600">{t.fxDelta}</th>
+                      <th className="p-4 text-center bg-amber-50 text-amber-600">{t.infDelta}</th>
+                      <th className="p-4 text-center">{t.rawDelta}</th>
+                      <th className="p-4 text-center">{t.energyDelta}</th>
+                      <th className="p-4 text-center">{t.laborDelta}</th>
+                      <th className="p-4 text-center bg-indigo-50 text-indigo-700">{t.newPrice}</th>
+                      <th className="p-4 text-right bg-red-50 text-red-600">{t.budgetImpact}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
@@ -371,12 +376,12 @@ const Procurement: React.FC<ProcurementProps> = ({ t, lang, initialTab = 'orders
                     <table className="w-full text-left">
                       <thead>
                         <tr className="bg-slate-50 border-b border-slate-100 text-[10px] text-slate-400 uppercase font-black tracking-widest">
-                          <th className="px-6 py-4">VENDOR NAME</th>
-                          <th className="px-6 py-4 text-center">OTD (%)</th>
-                          <th className="px-6 py-4 text-center">QUALITY (%)</th>
-                          <th className="px-6 py-4 text-center">PRICE IDX</th>
-                          <th className="px-6 py-4 text-center">RISK</th>
-                          <th className="px-6 py-4 text-right">VOL.</th>
+                          <th className="px-6 py-4">{t.vendorName}</th>
+                          <th className="px-6 py-4 text-center">{t.otdPercent}</th>
+                          <th className="px-6 py-4 text-center">{t.qualityPercent}</th>
+                          <th className="px-6 py-4 text-center">{t.priceIdx}</th>
+                          <th className="px-6 py-4 text-center">{t.risk}</th>
+                          <th className="px-6 py-4 text-right">{t.volume}</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-50">
@@ -388,8 +393,8 @@ const Procurement: React.FC<ProcurementProps> = ({ t, lang, initialTab = 'orders
                             <td className="px-6 py-4 text-center font-mono text-slate-600">{s.priceIdx}</td>
                             <td className="px-6 py-4 text-center">
                               <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase ${
-                                s.risk === 'Low' ? 'bg-green-100 text-green-700' :
-                                s.risk === 'Medium' ? 'bg-amber-100 text-amber-700' :
+                                s.risk === t.low ? 'bg-green-100 text-green-700' :
+                                s.risk === t.medium ? 'bg-amber-100 text-amber-700' :
                                 'bg-red-100 text-red-700'
                               }`}>{s.risk}</span>
                             </td>
@@ -401,7 +406,7 @@ const Procurement: React.FC<ProcurementProps> = ({ t, lang, initialTab = 'orders
                   </div>
                </div>
                <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl space-y-6">
-                  <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight">Supply Chain Health</h3>
+                  <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight">{t.supplyChainHealth}</h3>
                   <div className="h-64 flex items-center justify-center">
                     <ResponsiveContainer width="100%" height="100%">
                       <RadarChart cx="50%" cy="50%" outerRadius="80%" data={[
@@ -430,7 +435,7 @@ const Procurement: React.FC<ProcurementProps> = ({ t, lang, initialTab = 'orders
                <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/30">
                   <div>
                     <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">{t.bomControl}</h3>
-                    <p className="text-slate-500 text-sm mt-1">MRP, REQ ve PO arasındaki kiritik uyumsuzluklar.</p>
+                    <p className="text-slate-500 text-sm mt-1">{t.mrpCriticalMismatches}</p>
                   </div>
                   <span className="px-4 py-2 bg-red-100 text-red-700 text-[10px] font-black rounded-xl uppercase tracking-widest">{bomErrorData.length} CRITICAL ERRORS</span>
                </div>
