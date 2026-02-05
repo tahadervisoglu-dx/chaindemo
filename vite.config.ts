@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
     return {
-      base: '/', // Root'ta çalış
+      base: '/chaindemo/', // Blue-lobi rewrite ile uyumlu
       server: {
         port: 3000,
         host: '0.0.0.0',
